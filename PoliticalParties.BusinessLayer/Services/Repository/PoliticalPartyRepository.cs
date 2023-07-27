@@ -20,44 +20,110 @@ namespace PoliticalParties.BusinessLayer.Services.Repository
 
         public async Task<PoliticalParty> GetById(long politicalPartyId)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            try
+            {
+                return await _politicalPartiesDbContext.PoliticalParties.FindAsync(politicalPartyId);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
-        public async Task<PoliticalParty> GetByPartyName(string politicalPartyName)
+        public async Task<IEnumerable<PoliticalParty>> GetByPartyName(string politicalPartyName)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            try
+            {
+                var result = _politicalPartiesDbContext.PoliticalParties.Where(p => p.Name.ToLower() == politicalPartyName.ToLower()).ToList();
+                return result.Where(x => x.IsDeleted == false);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
-        public async Task<PoliticalParty> GetByFounderName(string politicalPartyFounderName)
+        public async Task<IEnumerable<PoliticalParty>> GetByFounderName(string politicalPartyFounderName)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            try
+            {
+                var result = _politicalPartiesDbContext.PoliticalParties.Where(p => p.Founder.ToLower() == politicalPartyFounderName.ToLower()).ToList();
+                return result.Where(x => x.IsDeleted == false);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
         public async Task<IEnumerable<PoliticalParty>> GetAll()
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            try
+            {
+                var result = _politicalPartiesDbContext.PoliticalParties.
+                OrderByDescending(x => x.PoliticalPartyId).ToList();
+                return result.Where(x => x.IsDeleted == false);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
         public async Task<PoliticalParty> Create(PoliticalParty politicalParty)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _politicalPartiesDbContext.PoliticalParties.AddAsync(politicalParty);
+                await _politicalPartiesDbContext.SaveChangesAsync();
+                return politicalParty;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
         public async Task<PoliticalParty> Update(RegisterPoliticalPartyViewModel model)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            var politicalParty = await _politicalPartiesDbContext.PoliticalParties.FindAsync(model.PoliticalPartyId);
+            try
+            {
+
+                politicalParty.Name = model.Name;
+                politicalParty.Founder = model.Founder;
+                politicalParty.IsDeleted = model.IsDeleted;
+
+
+                _politicalPartiesDbContext.PoliticalParties.Update(politicalParty);
+                await _politicalPartiesDbContext.SaveChangesAsync();
+                return politicalParty;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
         public async Task<PoliticalParty> Delete(RegisterPoliticalPartyViewModel model)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            var politicalParty = await _politicalPartiesDbContext.PoliticalParties.FindAsync(model.PoliticalPartyId);
+            try
+            {
+
+                politicalParty.Name = model.Name;
+                politicalParty.Founder = model.Founder;
+                politicalParty.IsDeleted = true;
+
+
+                _politicalPartiesDbContext.PoliticalParties.Update(politicalParty);
+                await _politicalPartiesDbContext.SaveChangesAsync();
+                return politicalParty;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
     }
 }

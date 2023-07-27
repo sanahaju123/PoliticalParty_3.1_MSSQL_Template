@@ -12,8 +12,8 @@ namespace PoliticalParties.BusinessLayer.Interfaces
     {
         Task<PoliticalParty> Create(PoliticalParty politicalParty);
         Task<PoliticalParty> GetById(long politicalPartyId);
-        Task<PoliticalParty> GetByPartyName(string politicalPartyName);
-        Task<PoliticalParty> GetByFounderName(string politicalPartyFounderName);
+        Task<IEnumerable<PoliticalParty>> GetByPartyName(string politicalPartyName);
+        Task<IEnumerable<PoliticalParty>> GetByFounderName(string politicalPartyFounderName);
         Task<PoliticalParty> Update(RegisterPoliticalPartyViewModel model);
         Task<PoliticalParty> Delete(RegisterPoliticalPartyViewModel model);
         Task<IEnumerable<PoliticalParty>> GetAll();

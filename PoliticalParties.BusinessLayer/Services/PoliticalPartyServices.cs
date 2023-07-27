@@ -15,51 +15,44 @@ namespace PoliticalParties.BusinessLayer.Services
     {
         private readonly IPoliticalPartyRepository _politicalPartyRepository;
         private readonly PoliticalPartiesDbContext _politicalPartiesDbContext;
-        public PoliticalPartyServices(IPoliticalPartyRepository politicalPartyRepository,PoliticalPartiesDbContext politicalPartiesDbContext)
+        public PoliticalPartyServices(IPoliticalPartyRepository politicalPartyRepository, PoliticalPartiesDbContext politicalPartiesDbContext)
         {
             _politicalPartyRepository = politicalPartyRepository;
             _politicalPartiesDbContext = politicalPartiesDbContext;
         }
 
-        public async Task<PoliticalParty> GetByPartyName(string politicalPartyName)
+        public async Task<IEnumerable<PoliticalParty>> GetByPartyName(string politicalPartyName)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            return await _politicalPartyRepository.GetByPartyName(politicalPartyName);
         }
 
-        public async Task<PoliticalParty> GetByFounderName(string politicalPartyFounderName)
+        public async Task<IEnumerable<PoliticalParty>> GetByFounderName(string politicalPartyFounderName)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            return await _politicalPartyRepository.GetByFounderName(politicalPartyFounderName);
         }
 
         public async Task<PoliticalParty> GetById(long politicalPartyId)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            return await _politicalPartyRepository.GetById(politicalPartyId);
         }
 
         public async Task<IEnumerable<PoliticalParty>> GetAll()
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            return await _politicalPartyRepository.GetAll();
         }
 
         public async Task<PoliticalParty> Create(PoliticalParty politicalParty)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            return await _politicalPartyRepository.Create(politicalParty);
         }
 
         public async Task<PoliticalParty> Update(RegisterPoliticalPartyViewModel model)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            return await _politicalPartyRepository.Update(model);
         }
         public async Task<PoliticalParty> Delete(RegisterPoliticalPartyViewModel model)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            return await _politicalPartyRepository.Delete(model);
         }
     }
 }

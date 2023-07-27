@@ -30,11 +30,24 @@ namespace PoliticalParties.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("parties")]
-        [EnableCors("AllowAll")]
         public async Task<IActionResult> Register([FromBody] RegisterPoliticalPartyViewModel model)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            var politicalPartyExists = await _politicalPartyServices.GetById(model.PoliticalPartyId);
+            if (politicalPartyExists != null)
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Political Party already exists!" });
+            PoliticalParty politicalParty = new PoliticalParty()
+            {
+
+                Name = model.Name,
+                Founder = model.Founder,
+                IsDeleted = false
+            };
+            var result = await _politicalPartyServices.Create(politicalParty);
+            if (result == null)
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Political Party creation failed! Please check details and try again." });
+
+            return Ok(new Response { Status = "Success", Message = "Political Party created successfully!" });
+
         }
 
         /// <summary>
@@ -44,11 +57,20 @@ namespace PoliticalParties.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("parties/{id}")]
-        [EnableCors("AllowAll")]
-        public async Task<IActionResult> UpdatePoliticalParty(long id,[FromBody] RegisterPoliticalPartyViewModel model)
+        public async Task<IActionResult> UpdatePoliticalParty(long id, [FromBody] RegisterPoliticalPartyViewModel model)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            var politicalParty = await _politicalPartyServices.GetById(id);
+            if (politicalParty == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response
+                { Status = "Error", Message = $"political Party With Id = {model.PoliticalPartyId} cannot be found" });
+            }
+            else
+            {
+                model.PoliticalPartyId = id;
+                var result = await _politicalPartyServices.Update(model);
+                return Ok(new Response { Status = "Success", Message = "Political Party Edited successfully!" });
+            }
         }
 
 
@@ -59,11 +81,24 @@ namespace PoliticalParties.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Route("parties/{id}")]
-        [EnableCors("AllowAll")]
         public async Task<IActionResult> DeletePoliticalParty(long id)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            var politicalParty = await _politicalPartyServices.GetById(id);
+            if (politicalParty == null || politicalParty.IsDeleted == true)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response
+                { Status = "Error", Message = $"Political Party With Id = {id} cannot be found" });
+            }
+            else
+            {
+                RegisterPoliticalPartyViewModel register = new RegisterPoliticalPartyViewModel();
+                register.PoliticalPartyId = politicalParty.PoliticalPartyId;
+                register.Name = politicalParty.Name;
+                register.Founder = politicalParty.Founder;
+                register.IsDeleted = true;
+                var result = await _politicalPartyServices.Delete(register);
+                return Ok(new Response { Status = "Success", Message = "Political Party deleted successfully!" });
+            }
         }
 
         /// <summary>
@@ -73,11 +108,18 @@ namespace PoliticalParties.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("parties/{id}")]
-        [EnableCors("AllowAll")]
         public async Task<IActionResult> GetPoliticalPartyById(long id)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            var politicalParty = await _politicalPartyServices.GetById(id);
+            if (politicalParty == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response
+                { Status = "Error", Message = $"Political Party With Id = {id} cannot be found" });
+            }
+            else
+            {
+                return Ok(politicalParty);
+            }
         }
 
         /// <summary>
@@ -87,11 +129,18 @@ namespace PoliticalParties.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("parties/searchParty")]
-        [EnableCors("AllowAll")]
-        public async Task<IActionResult> GetPoliticalPartyByName([FromQuery] string name)
+        public async Task<IEnumerable<PoliticalParty>> GetPoliticalPartyByName([FromQuery] string name)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            var politicalParty = await _politicalPartyServices.GetByPartyName(name);
+            if (politicalParty == null)
+            {
+                return (IEnumerable<PoliticalParty>)StatusCode(StatusCodes.Status500InternalServerError, new Response
+                { Status = "Error", Message = $"Political Party With Name = {name} cannot be found" });
+            }
+            else
+            {
+                return (IEnumerable<PoliticalParty>)(politicalParty);
+            }
         }
 
         /// <summary>
@@ -101,11 +150,18 @@ namespace PoliticalParties.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("parties/search")]
-        [EnableCors("AllowAll")]
-        public async Task<IActionResult> GetPoliticalPartyByFounderName([FromQuery] string founderName)
+        public async Task<IEnumerable<PoliticalParty>> GetPoliticalPartyByFounderName([FromQuery] string founderName)
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            var politicalParty = await _politicalPartyServices.GetByFounderName(founderName);
+            if (politicalParty == null)
+            {
+                return (IEnumerable<PoliticalParty>)StatusCode(StatusCodes.Status500InternalServerError, new Response
+                { Status = "Error", Message = $"Political Party With Founder Name = {founderName} cannot be found" });
+            }
+            else
+            {
+                return (IEnumerable<PoliticalParty>)(politicalParty);
+            }
         }
 
         /// <summary>
@@ -114,11 +170,9 @@ namespace PoliticalParties.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("parties")]
-        [EnableCors("AllowAll")]
         public async Task<IEnumerable<PoliticalParty>> ListAllPoliticalParties()
         {
-            //Write Your Code Here
-            throw new NotImplementedException();
+            return await _politicalPartyServices.GetAll();
         }
         #endregion
     }

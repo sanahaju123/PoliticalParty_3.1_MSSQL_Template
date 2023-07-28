@@ -20,110 +20,44 @@ namespace PoliticalParties.BusinessLayer.Services.Repository
 
         public async Task<PoliticalParty> GetById(long politicalPartyId)
         {
-            try
-            {
-                return await _politicalPartiesDbContext.PoliticalParties.FindAsync(politicalPartyId);
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<PoliticalParty>> GetByPartyName(string politicalPartyName)
         {
-            try
-            {
-                var result = _politicalPartiesDbContext.PoliticalParties.Where(p => p.Name.ToLower() == politicalPartyName.ToLower()).ToList();
-                return result.Where(x => x.IsDeleted == false);
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<PoliticalParty>> GetByFounderName(string politicalPartyFounderName)
         {
-            try
-            {
-                var result = _politicalPartiesDbContext.PoliticalParties.Where(p => p.Founder.ToLower() == politicalPartyFounderName.ToLower()).ToList();
-                return result.Where(x => x.IsDeleted == false);
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<PoliticalParty>> GetAll()
         {
-            try
-            {
-                var result = _politicalPartiesDbContext.PoliticalParties.
-                OrderByDescending(x => x.PoliticalPartyId).ToList();
-                return result.Where(x => x.IsDeleted == false);
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<PoliticalParty> Create(PoliticalParty politicalParty)
         {
-            try
-            {
-                var result = await _politicalPartiesDbContext.PoliticalParties.AddAsync(politicalParty);
-                await _politicalPartiesDbContext.SaveChangesAsync();
-                return politicalParty;
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<PoliticalParty> Update(RegisterPoliticalPartyViewModel model)
         {
-            var politicalParty = await _politicalPartiesDbContext.PoliticalParties.FindAsync(model.PoliticalPartyId);
-            try
-            {
-
-                politicalParty.Name = model.Name;
-                politicalParty.Founder = model.Founder;
-                politicalParty.IsDeleted = model.IsDeleted;
-
-
-                _politicalPartiesDbContext.PoliticalParties.Update(politicalParty);
-                await _politicalPartiesDbContext.SaveChangesAsync();
-                return politicalParty;
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<PoliticalParty> Delete(RegisterPoliticalPartyViewModel model)
         {
-            var politicalParty = await _politicalPartiesDbContext.PoliticalParties.FindAsync(model.PoliticalPartyId);
-            try
-            {
-
-                politicalParty.Name = model.Name;
-                politicalParty.Founder = model.Founder;
-                politicalParty.IsDeleted = true;
-
-
-                _politicalPartiesDbContext.PoliticalParties.Update(politicalParty);
-                await _politicalPartiesDbContext.SaveChangesAsync();
-                return politicalParty;
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
     }
 }

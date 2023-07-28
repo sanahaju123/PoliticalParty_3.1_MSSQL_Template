@@ -23,36 +23,43 @@ namespace PoliticalParties.BusinessLayer.Services
 
         public async Task<IEnumerable<PoliticalParty>> GetByPartyName(string politicalPartyName)
         {
-            return await _politicalPartyRepository.GetByPartyName(politicalPartyName);
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<PoliticalParty>> GetByFounderName(string politicalPartyFounderName)
         {
-            return await _politicalPartyRepository.GetByFounderName(politicalPartyFounderName);
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<PoliticalParty> GetById(long politicalPartyId)
         {
-            return await _politicalPartyRepository.GetById(politicalPartyId);
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<PoliticalParty>> GetAll()
         {
-            return await _politicalPartyRepository.GetAll();
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<PoliticalParty> Create(PoliticalParty politicalParty)
         {
-            return await _politicalPartyRepository.Create(politicalParty);
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
 
         public async Task<PoliticalParty> Update(RegisterPoliticalPartyViewModel model)
         {
-            return await _politicalPartyRepository.Update(model);
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
         public async Task<PoliticalParty> Delete(RegisterPoliticalPartyViewModel model)
         {
-            return await _politicalPartyRepository.Delete(model);
+            //Write Your Code Here
+            throw new NotImplementedException();
         }
     }
 }
